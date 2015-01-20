@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="TITLE %d{yyyy-MM-dd HH:mm:ss.SSS} %5p %c{1}:%L-%m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/usr/local/logs/perf/foo.bar.perf.log"/>
+        <param name="TimeZoneID" value="UTC"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.EnhancedPatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss.SSS}{UTC} %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="xml" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/usr/local/logs/xml/foo.bar.xml.log"/>
+        <param name="TimeZoneID" value="UTC"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.EnhancedPatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss.SSS}{UTC} %m%n"/>
+        </layout>
+    </appender>
+
+    <logger name="foo_logger" additivity="false">
+        <level value="TRACE"/>
+        <appender-ref ref="file"/>
+    </logger>
+
+    <logger name="com.foo.bar">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="org.springframework.ws.client.MessageTracing.received" additivity="false">
+        <level value="TRACE"/>
+        <appender-ref ref="xml"/>
+    </logger>
+
+    <root>
+        <priority value="ERROR"/>
+        <level value="ERROR"/>
+        <appender-ref ref="console"/>
+    </root>
+
+</log4j:configuration>
